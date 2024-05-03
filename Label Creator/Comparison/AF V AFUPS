@@ -1,0 +1,33 @@
+Sub Layout5()
+
+    Dim RowNo As Double     'Number of rows containing data, counted from column A (Specified column if printing specific labels)
+    Dim IE As Variant   'The chosen layout
+    Dim check As Variant
+    Dim check2 As Variant
+    Dim check3 As String
+    Dim j As Integer
+    j = 1
+    Dim h As String
+    
+
+    RowNoE = (Sheets("IEEE 1584 2018").Range("A:A").Cells.SpecialCells(xlCellTypeConstants).Count) + 4
+    RowNoEP = (Sheets("IEEE 1584 2018 UPS").Range("A:A").Cells.SpecialCells(xlCellTypeConstants).Count) + 4
+
+    For i = 5 To RowNoE
+        Sheets("AF V AFUPS").Rows(i - 4).Value = Sheets("IEEE 1584 2018").Rows(i).Value
+        h = Sheets("IEEE 1584 2018").Cells(i, Columns.Count).End(xlToLeft).Column
+        For k = 5 To RowNoEP
+            If Sheets("IEEE 1584 2018 UPS").Cells(k, 1).Value = Sheets("IEEE 1584 2018").Cells(i, 1).Value Then
+                If Round(Sheets("IEEE 1584 2018 UPS").Cells(k, 19).Value, 2) = Round(Sheets("IEEE 1584 2018").Cells(i, 19).Value, 2) Then
+                
+                Sheets("AF V AFUPS").Rows(i - 4).Interior.ColorIndex = 4
+                Else
+                Sheets("AF V AFUPS").Cells(i - 4, h + 1).Value = Sheets("IEEE 1584 2018 UPS").Cells(k, 19).Value
+                Sheets("AF V AFUPS").Rows(i - 4).Interior.ColorIndex = 3
+                End If
+            End If
+        Next k
+    Next i
+
+End Sub
+
